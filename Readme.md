@@ -19,7 +19,11 @@ A trilha está dividida em várias etapas, cada uma focada em áreas específica
 **TEAM**
 
 Brenndol Magalhães | e-mail: brendo1994@gmail.com | GitHub: https://github.com/brenndol
+
 Erika Ravanna | e-mail: erikaravanna@hotmail.com | GitHub: https://github.com/erikaravanna
+
 Raissa Simôes | e-mail: simooesangelo@gmail.com | GitHub: https://github.com/raisimoes
+
 Renata Bamberg | e-mail rbamberg6@gmail.com | GitHub: https://github.com/renatabamberg
+
 Rafaela Brito | e-mail: rcfbritto@gmail.com | GitHub: https://github.com/rcfbritto
