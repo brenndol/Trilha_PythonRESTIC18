@@ -117,6 +117,22 @@ class ListaNomes(AnaliseDados):
 
     def __iter__(self):
         return iter(self.__lista)
+    
+    def moda(self):
+        from collections import Counter
+
+        contagem_nomes = Counter(self._lista)
+        moda = contagem_nomes.most_common(1)
+        
+        if moda:
+            return moda[0][0]
+        else:
+            return None
+
+    def contagem_ocorrencias(self):
+        from collections import Counter
+
+        return Counter(self._lista)
 
 
 class ListaDatas(AnaliseDados):
@@ -165,6 +181,22 @@ class ListaDatas(AnaliseDados):
 
     def __str__(self):
         return ', '.join(str(data) for data in self.__lista)
+    
+    def moda(self):
+        from collections import Counter
+
+        contagem_datas = Counter(self._lista)
+        moda = contagem_datas.most_common(1)
+        
+        if moda:
+            return moda[0][0]
+        else:
+            return None
+
+    def contagem_ocorrencias(self):
+        from collections import Counter
+
+        return Counter(self._lista)
 
 
 class ListaSalarios(AnaliseDados):
@@ -186,6 +218,30 @@ class ListaSalarios(AnaliseDados):
                         print("Erro: Insira um valor de salário válido.")
         except ValueError:
             print("Erro: Insira um número válido para a quantidade.")
+        
+    def media(self):
+        if not self._lista:
+            raise ValueError("A lista de salários está vazia.")
+        
+        total = sum(self._lista)
+        media = total / len(self._lista)
+        return media
+
+    def variancia(self):
+        if len(self._lista) < 2:
+            raise ValueError("É necessário pelo menos dois salários para calcular a variância.")
+        
+        media = self.media()
+        soma_diferencas_quadradas = sum((x - media) ** 2 for x in self._lista)
+        variancia = soma_diferencas_quadradas / (len(self._lista) - 1)
+        return variancia
+
+    def desvio_padrao(self):
+        import math
+
+        variancia = self.variancia()
+        desvio_padrao = math.sqrt(variancia)
+        return desvio_padrao
 
     def mostra_mediana(self):
         self.__lista.sort()
@@ -255,3 +311,27 @@ class ListaIdades(AnaliseDados):
 
     def __iter__(self):
         return iter(self.__lista)
+    
+    def media_idades(self):
+        if not self._lista:
+            raise ValueError("A lista de idades está vazia.")
+        
+        total = sum(self._lista)
+        media = total / len(self._lista)
+        return media
+
+    def variancia_idades(self):
+        if len(self._lista) < 2:
+            raise ValueError("É necessário pelo menos duas idades para calcular a variância.")
+        
+        media = self.media_idades()
+        soma_diferencas_quadradas = sum((x - media) ** 2 for x in self._lista)
+        variancia = soma_diferencas_quadradas / (len(self._lista) - 1)
+        return variancia
+
+    def desvio_padrao_idades(self):
+        import math
+
+        variancia = self.variancia_idades()
+        desvio_padrao = math.sqrt(variancia)
+        return desvio_padrao
