@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 
 class Data:
     def __init__(self, dia=1, mes=1, ano=2000):
+        self.valida_data(dia, mes, ano)
         if dia < 1 or dia > 31:
             raise ValueError("Dia inválido")
         if mes < 1 or mes > 12:
@@ -18,6 +19,7 @@ class Data:
     
     @dia.setter
     def dia(self, dia):
+        self.valida_data(dia, self.__mes, self.__ano)
         if dia < 1 or dia > 31:
             raise ValueError("Dia inválido")
         self.__dia = dia
@@ -28,6 +30,7 @@ class Data:
     
     @mes.setter
     def mes(self, mes):
+        self.valida_data(self.__dia, mes, self.__ano)
         if mes < 1 or mes > 12:
             raise ValueError("Mês inválido")
         self.__mes = mes
@@ -38,9 +41,14 @@ class Data:
     
     @ano.setter
     def ano(self, ano):
+        self.valida_data(self.__dia, self.__mes, ano)
         if ano < 2000 or ano > 2100:
             raise ValueError("Ano inválido")
         self.__ano = ano
+    
+    def valida_data(self, dia, mes, ano):
+        if not (1 <= dia <= 31 and 1 <= mes <= 12 and 2000 <= ano <= 2100):
+            raise ValueError("Data inválida!")
     
     def __str__(self):
         return "{}/{}/{}".format(self.__dia, self.__mes, self.__ano)
@@ -121,7 +129,10 @@ class ListaNomes(AnaliseDados):
 
 class ListaDatas(AnaliseDados):
     def __init__(self):
-        self.__lista = []        
+        self.__lista = []
+
+    def __str__(self):
+        return ', '.join(str(data) for data in self.__lista)        
     
     def entrada_de_dados(self):
         try:

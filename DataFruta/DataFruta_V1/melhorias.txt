@@ -1,0 +1,15 @@
+Validações de Entrada:
+
+Adição do método valida_data na classe Data para validar entradas de dia, mês e ano.
+
+Formatação de Data:
+Adição do método formatar_data na classe Data para fornecer uma maneira mais flexível de formatar a data.
+
+Propriedades e Validadores:
+Uso de propriedades e validadores nas classes Data para garantir que as datas sejam válidas ao serem definidas.
+
+Mensagens de Erro:
+Mensagens de erro mais descritivas foram adicionadas nas exceções, fornecendo informações adicionais sobre o erro.
+
+Pythonic Idioms:
+Adaptações para seguir práticas Pythonicas, como o uso de propriedades, nomes de métodos mais descritivos e formatação de código.
