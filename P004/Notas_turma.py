@@ -1,14 +1,20 @@
 import numpy as np
 
 class ListaNotas:
-    def __init__(self, nAlunos = 30, nCreditos = 3):
+    def __init__(self, nAlunos=30, nCreditos=3):
         self._nAlunos = nAlunos
         self._nCreditos = nCreditos
         self._notas = None
 
+    def _verificar_notas_lidas(self):
+        if self._notas is None:
+            print("Notas não foram lidas. Utilize o método leNotas() primeiro.")
+            return False
+        return True
+
     def leNotas(self):
         print(f"Digite as notas para {self._nAlunos} alunos:")
-        self._notas = np.zeros(self._nAlunos, dtype=float)
+        self._notas = np.zeros((self._nAlunos, self._nCreditos), dtype=float)
         for i in range(self._nAlunos):
             while True:
                 try:
@@ -21,106 +27,81 @@ class ListaNotas:
                 except ValueError:
                     print("Digite uma nota válida.")
 
-    def mediaTurma(self):
-        if self._notas is None:
-            print("Notas não foram lidas. Utilize o método leNotas() primeiro.")
-            return None
-        else:
-            return np.mean(self._notas)
-        
+    def _calcular_media(self, array, axis=None):
+        return np.mean(array, axis=axis)
 
-    def mediaAluno(self, index = 0):
-        if self._notas is None:
-            print("Notas não foram lidas. Utilize o método leNotas() primeiro.")
+    def mediaTurma(self):
+        if not self._verificar_notas_lidas():
             return None
-        else:
-            return np.mean(self._notas[:, index])
-        
-    def mediaAvaliacao(self, index = 0):
-        if self._notas is None:
-            print("Notas não foram lidas. Utilize o método leNotas() primeiro.")
+        return self._calcular_media(self._notas)
+
+    def mediaAluno(self, index=0):
+        if not self._verificar_notas_lidas():
             return None
-        else:
-            return np.mean(self._notas[:, index])
-        
+        return self._calcular_media(self._notas[:, index])
+
+    def mediaAvaliacao(self, index=0):
+        if not self._verificar_notas_lidas():
+            return None
+        return self._calcular_media(self._notas[:, index])
+
     def quantAprovados(self):
-        if self._notas is None:
-            print("Notas não foram lidas. Utilize o método leNotas() primeiro.")
+        if not self._verificar_notas_lidas():
             return None
-        else:
-            return np.sum(np.mean(self._notas, axis = 1) >= 6)
-        
+        return np.sum(self._calcular_media(self._notas, axis=1) >= 6)
+
     def quantReprovados(self):
-        if self._notas is None:
-            print("Notas não foram lidas. Utilize o método leNotas() primeiro.")
+        if not self._verificar_notas_lidas():
             return None
-        else:
-            return np.sum(np.mean(self._notas, axis = 1) < 6)
-        
+        return np.sum(self._calcular_media(self._notas, axis=1) < 6)
+
     def menorNota(self):
-        if self._notas is None:
-            print("Notas não foram lidas. Utilize o método leNotas() primeiro.")
+        if not self._verificar_notas_lidas():
             return None
-        else: 
-            menor_notas_avaliacoes = np.min(self._notas, axis = 0)
-            menor_media_final = np.min(np.mean(self._notas, axis = 1))
-            return menor_notas_avaliacoes, menor_media_final
-        
+        return np.min(self._notas, axis=0), np.min(self._calcular_media(self._notas, axis=1))
+
     def maiorNota(self):
-        if self._notas is None:
-            print("Notas não foram lidas. Utilize o método leNotas() primeiro.")
+        if not self._verificar_notas_lidas():
             return None
-        else:
-            maior_notas_avaliacoes = np.max(self._notas, axis = 0)
-            maior_media_final = np.max(np.mean(self._notas, axis = 1))
-            return maior_notas_avaliacoes, maior_media_final
-        
+        return np.max(self._notas, axis=0), np.max(self._calcular_media(self._notas, axis=1))
+
     def menorNotaMediaFinal(self):
-        if self._notas is None:
-            print("Notas não foram lidas. Utilize o método leNotas() primeiro.")
+        if not self._verificar_notas_lidas():
             return None
-        else:
-            menor_media_final = np.min(np.mean(self._notas, axis = 1))
-            return menor_media_final
+        return np.min(self._calcular_media(self._notas, axis=1))
 
     def maiorNotaMediaFinal(self):
-        if self._notas is None:
-            print("Notas não foram lidas. Utilize o método leNotas() primeiro.")
+        if not self._verificar_notas_lidas():
             return None
-        else:
-            maior_media_final = np.max(np.mean(self._notas, axis = 1))
-            return maior_media_final
+        return np.max(self._calcular_media(self._notas, axis=1))
 
     def __str__(self):
-        if self._notas is None:
+        if not self._verificar_notas_lidas():
             return "Notas não foram lidas. Utilize o método leNotas() primeiro."
-        else:
-            return f"Notas da turma:\n{self._notas}"
+        return f"Notas da turma:\n{self._notas}"
 
+if __name__ == "__main__":
+    turma = ListaNotas()
+    turma.leNotas()
 
-turma = ListaNotas()
-turma.leNotas()
+    index_aluno = 0
+    index_avaliacao = 0
 
-index_aluno = 0
-index_avaliacao = 0
+    media_aluno = turma.mediaAluno(index_aluno)
+    media_avaliacao = turma.mediaAvaliacao(index_avaliacao)
+    quant_aprovados = turma.quantAprovados()
+    quant_reprovados = turma.quantReprovados()
+    menor_nota = turma.menorNota()
+    maior_nota = turma.maiorNota()
+    menor_nota_media_final = turma.menorNotaMediaFinal()
+    maior_nota_media_final = turma.maiorNotaMediaFinal()
 
-media_aluno = turma.mediaAluno(index_aluno)
-media_avaliacao = turma.mediaAvaliacao(index_avaliacao)
-quant_aprovados = turma.quantAprovados()
-quant_reprovados = turma.quantReprovados()
-menor_nota = turma.menorNota()
-maior_nota = turma.maiorNota()
-menor_nota_media_final = turma.menorNotaMediaFinal()
-maior_nota_media_final = turma.maiorNotaMediaFinal()
-
-print(f"Média do aluno {index_aluno + 1}: {media_aluno}")
-print(f"Média na avaliação {index_avaliacao + 1}: {media_avaliacao}")
-print(f"Quantidade de aprovados: {quant_aprovados}")
-print(f"Quntidade de reprovados: {quant_reprovados}")
-print(f"Menor nota: {menor_nota}")
-print(f"Maior nota: {maior_nota}")
-print(f"Menor nota na média final: {menor_nota_media_final}")
-print(f"Maior nota da média final: {maior_nota_media_final}")
-print(str(turma))
-        
-        
+    print(f"Média do aluno {index_aluno + 1}: {media_aluno}")
+    print(f"Média na avaliação {index_avaliacao + 1}: {media_avaliacao}")
+    print(f"Quantidade de aprovados: {quant_aprovados}")
+    print(f"Quantidade de reprovados: {quant_reprovados}")
+    print(f"Menor nota: {menor_nota}")
+    print(f"Maior nota: {maior_nota}")
+    print(f"Menor nota na média final: {menor_nota_media_final}")
+    print(f"Maior nota da média final: {maior_nota_media_final}")
+    print(str(turma))
