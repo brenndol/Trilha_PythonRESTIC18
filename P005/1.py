@@ -21,6 +21,6 @@ for i in range(len(identificador)):
     else:
         print("Andamento da Graduação: Não aplicável")
 
-    print("Tempo de Formado:", tempoFormação[i])
+    print("Tempo de Formado em anos:", tempoFormação[i])
     print("Experiência Prévia:", experiênciaPrevia[i])
     print()
