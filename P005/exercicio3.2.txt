@@ -1,0 +1,40 @@
+As estratégias que podem ser usadas para lidar com a variabilidade nos rótulos da coluna "Formação Específica" são:
+
+1. Padronização dos rótulos:
+- Padronizar rótulos da coluna "Formação Específica' para garantir consistência.
+- Converter todos os rótulos para minúsculas.
+- Remover espaços extras e caracteres especiais.
+
+2. Mapeamento para Categorias:
+- Mapear os rótulos padronizados para categorias mais amplas, se aplicável. Isso pode ajudar a reduzir a quantidade de rótulos únicos.
+Por exemplo, você pode agrupar formações semelhantes sob categorias gerais, como "Engenharia", "Ciência da Computação", etc.
+
+3. Lidar com Dados Ausentes (NaN):
+- Verificar e lidar com valores ausentes (NaN) na coluna "Formação Específica". Pode ser interessante preencher esses valores ausentes com uma categoria como "Não Especificado" ou "Outro".
+
+4. Análise Exploratória de Dados (EDA):
+- Realizar uma análise exploratória de dados para entender a distribuição dos rótulos na coluna "Formação Específica". Isso pode ajudar a identificar padrões e decisões adicionais para o tratamento dos dados.
+
+5. Manter um Dicionário de Mapeamento:
+- Manter um dicionário de mapeamento que relaciona rótulos originais aos rótulos padronizados. Isso pode ser útil para referência futura e manutenção da consistência.
+
+
+Aqui está um exemplo de implementação dessas sugestões no código:
+- Padronização dos rótulos
+df['Formação Específica'] = df['Formação Específica'].str.lower().str.strip()
+
+- Mapeamento para categorias
+mapeamento_categorias = {
+    'análise e desenvolvimento de sistemas': 'Ciência da Computação',
+    'engenharia química': 'Engenharia',
+    'engenharia mecânica': 'Engenharia',
+    # Adicione mais mapeamentos conforme necessário
+}
+
+df['Formação Específica'] = df['Formação Específica'].map(mapeamento_categorias)
+
+- Lidar com dados ausentes
+df['Formação Específica'].fillna('Não Especificado', inplace=True)
+
+- Exibir DataFrame após tratamento
+print(df)
