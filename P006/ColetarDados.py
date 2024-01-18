@@ -1,3 +1,5 @@
+import pandas as pd
+
 def coletar_dados_residente():
     codigo = input("Digite o código do residente: ")
     idade = int(input("Digite o ano de nascimento do residente: "))
@@ -5,7 +7,12 @@ def coletar_dados_residente():
     formacao_geral = bool(input("Qual a formação geral (True/False): "))
     andamento_grad = input("Digite o andamento da graduação do residente: ")
     tempo_formacao = int(input("Digite o tempo total de formação do residente (em anos): "))
-    exp_programacao = input("Digite a experiência em programação do residente: ")
+    exp_programacao = int(input("Em uma escala de 1 a 5, qual é sua experiência prévia em programação? (1 - Iniciante, 5 - Avançado): "))
+
+    # Validar se o usuário forneceu ambos os campos
+    if andamento_grad and tempo_formacao:
+        print("Erro: Os campos 'Andamento Graduação' e 'Tempo Formação' são excludentes. Forneça apenas um deles.")
+        return None
 
     return Residente(codigo, idade, formacao, formacao_geral, andamento_grad, tempo_formacao, exp_programacao)
 
