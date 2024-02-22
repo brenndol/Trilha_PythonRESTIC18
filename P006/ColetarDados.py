@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+import os
+from ClassResidente import Residente, Trilha, Residencia
+=======
+>>>>>>> 8db0eb11a99214a047c5a905e05dc65f1f854dfa
 import pandas as pd
 
 def coletar_dados_residente():
@@ -16,10 +21,29 @@ def coletar_dados_residente():
 
     return Residente(codigo, idade, formacao, formacao_geral, andamento_grad, tempo_formacao, exp_programacao)
 
+<<<<<<< HEAD
+
+def salvar_dados_csv(trilha):
+    trilha.dados.to_csv(f"{trilha.identificador}.csv", index=False)
+
+def carregar_dados_csv(trilha):
+    if os.path.exists(f"{trilha.identificador}.csv"):
+        trilha.dados = pd.read_csv(f"{trilha.identificador}.csv")
+
+def main():
+    residencia = Residencia()
+
+for trilha_nome, trilha_obj in residencia.trilhas.items():
+        # Carregar dados do CSV se existirem
+        carregar_dados_csv(trilha_obj)
+
+while True:
+=======
 def main():
     residencia = Residencia()
 
     while True:
+>>>>>>> 8db0eb11a99214a047c5a905e05dc65f1f854dfa
         print("Escolha a trilha:")
         print("1. Python")
         print("2. Java")
@@ -29,6 +53,12 @@ def main():
         escolha = input("Digite o número da trilha ou 0 para sair: ")
 
         if escolha == '0':
+<<<<<<< HEAD
+# Salvar dados antes de sair
+            for trilha_nome, trilha_obj in residencia.trilhas.items():
+                salvar_dados_csv(trilha_obj)
+=======
+>>>>>>> 8db0eb11a99214a047c5a905e05dc65f1f854dfa
             break
 
         trilha = None
