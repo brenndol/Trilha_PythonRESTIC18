@@ -44,4 +44,41 @@ class SegundoPrototipoApp:
         options = [option.text for option in soup.find(id="anos").find_all("option")]
         return options
 
-    
+    def buscar_estacao(self):
+        year = self.yearvar.get()
+        if not year:
+            messagebox.showerror("Erro", "Por favor, selecione um ano primeiro.")
+            return
+
+        try:
+            # Download do arquivo compactado
+            url = f"https://portal.inmet.gov.br/uploads/dadoshistoricos/%7Byear%7D.zip"
+            response = requests.get(url)
+            response.raiseforstatus()
+
+            # Criar uma pasta temporária para extrair os dados
+            temp_dir = os.path.join(os.getcwd(), "temp")
+            os.makedirs(temp_dir, exist_ok=True)
+
+            # Salvar o arquivo zip na pasta temporária
+            zip_path = os.path.join(temp_dir, f'{year}.zip')
+            with open(zip_path, 'wb') as f:
+                f.write(response.content)
+
+            # Extrair o arquivo zip
+            with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+                zip_ref.extractall(temp_dir)
+
+            # Listar as estações disponíveis
+            station_files = [filename.split('.')[0] for filename in os.listdir(temp_dir)]
+            self.station_dropdown['values'] = station_files
+        except Exception as e:
+            messagebox.showerror("Erro", f"Erro ao buscar estações disponíveis: {str(e)}")
+
+def segPrototipo():
+    root = tk.Tk()
+    app = SegundoPrototipoApp(root)
+    root.mainloop()
+
+if __name__ == "__main__":
+    segPrototipo()
